@@ -90,13 +90,16 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+        'Dialog'
+      ]
     },
 
     // animations: 'all', // --- includes all animations
     // https://v2.quasar.dev/options/animations
     animations: [
       'fadeInDown',
+      'fadeInLeft',
       'fadeOutRight'
     ],
 

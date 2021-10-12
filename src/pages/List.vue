@@ -83,7 +83,7 @@
       <q-list separator>
         <transition-group
           appear
-          enter-active-class="animated fadeInDown slow"
+          enter-active-class="animated fadeInLeft slow"
           leave-active-class="animated fadeOutRight slow">
           <q-item
             class="bg-grey-5 text-grey-7 text-body1"
@@ -128,13 +128,14 @@
 
       <div class="text-right q-mr-md">
         <q-btn
-        icon="delete_sweep"
-        size="35px"
+        v-if="items != '' || itemsDone != ''"
+        icon="auto_awesome"
+        size="xl"
         flat
         round
         dense
         color="negative"
-        @click="delPopup" />
+        @click="deleteAll(items, itemsDone)" />
       </div>
 
     </q-scroll-area>
@@ -177,6 +178,22 @@ export default defineComponent({
     },
     deleteDoneItem(item) {
       deleteDoc(doc(db, 'itemsDone', item.id))
+    },
+    deleteAll(items, itemsDone) {
+      this.$q.dialog({
+        title: 'New List',
+        message: 'Delete all items on your shopping list?',
+        cancel: true,
+        class: 'text-body1',
+        persistent: true
+      }).onOk(() => {
+        items.forEach((item) => {
+          deleteDoc(doc(db, 'items', item.id))
+        })
+        itemsDone.forEach((item) => {
+          deleteDoc(doc(db, 'itemsDone', item.id))
+        })
+      })
     }
   },
   mounted() {
